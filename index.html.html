@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Birthday Quest 🎂</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body{margin:0;font-family:sans-serif;background:#0f1020;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;text-align:center}
+  #game{max-width:500px}
+  .hidden{display:none}
+  button{background:#ff87d1;color:#000;padding:12px 20px;border:none;border-radius:12px;font-weight:bold;cursor:pointer;margin-top:16px}
+  input{padding:8px;border-radius:6px;border:none;margin-top:12px;font-size:16px}
+  .confetti span{position:absolute;top:-10px;font-size:18px;animation:fall 3.5s linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.9}}
+</style>
+</head>
+<body>
+<div id="game">
+  <h2>Welcome, Ussawar 🎉</h2>
+  <div id="step1">
+    <p>Step 1: Click the magic button to start!</p>
+    <button onclick="nextStep(2)">Start ✨</button>
+  </div>
+  <div id="step2" class="hidden">
+    <p>Step 2: Type your name below 👇</p>
+    <input id="nameInput" placeholder="Your name"/>
+    <button onclick="checkName()">Continue ➡</button>
+  </div>
+  <div id="step3" class="hidden">
+    <p>Step 3: Solve this mini riddle:</p>
+    <p><i>“I come once a year but bring lots of cheer. What am I?”</i></p>
+    <input id="riddleInput" placeholder="Answer here"/>
+    <button onclick="checkRiddle()">Submit</button>
+  </div>
+  <div id="final" class="hidden">
+    <h1>🎂 Happy Birthday, Ussawar! 🎂</h1>
+    <p>Dear Ussawar,</p>
+    <p>I may be a little late, but my love and wishes for you are always right on time. 💖</p>
+    <p>You’re such a special friend to me, and I’m so grateful for all the joy and laughter you bring into my life. 🎈</p>
+    <p>May this year bless you with happiness, health, and endless smiles. ✨</p>
+    <p>— With lots of love, Motasim 💛</p>
+    <p>Click below for your surprise 👇</p>
+    <button onclick="launchSurprise()">Open Surprise 🎁</button>
+  </div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<script>
+function nextStep(num){
+  document.querySelectorAll("#game > div").forEach(d=>d.classList.add("hidden"));
+  document.getElementById("step"+num).classList.remove("hidden");
+}
+
+function checkName(){
+  const val=document.getElementById("nameInput").value.trim().toLowerCase();
+  if(val){
+    nextStep(3);
+  } else {alert("Please type your name 🙂")}
+}
+
+function checkRiddle(){
+  const val=document.getElementById("riddleInput").value.trim().toLowerCase();
+  if(val.includes("birthday")){
+    document.querySelectorAll("#game > div").forEach(d=>d.classList.add("hidden"));
+    document.getElementById("final").classList.remove("hidden");
+  } else {
+    alert("Hint: it’s the reason we’re here today 🎂");
+  }
+}
+
+function launchSurprise(){
+  shootConfetti();
+  alert("🎉 Happy Birthday again, Ussawar! Check your messages for your real gift 💝");
+  window.open("https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M","_blank");
+}
+
+function shootConfetti(){
+  const confetti=document.getElementById("confetti");
+  for(let i=0;i<100;i++){
+    const s=document.createElement("span");
+    s.textContent=["🎉","🎈","✨","💖","⭐"][Math.floor(Math.random()*5)];
+    s.style.left=(Math.random()*100)+"%";
+    s.style.animationDelay=(Math.random()*0.6)+"s";
+    s.style.fontSize=(14+Math.random()*12)+"px";
+    confetti.appendChild(s);
+    setTimeout(()=>s.remove(),4000);
+  }
+}
+</script>
+</body>
+</html>
